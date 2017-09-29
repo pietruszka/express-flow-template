@@ -1,40 +1,25 @@
-import gulp from "gulp";
-import shell from "gulp-shell";
-import rimraf from "rimraf";
-import run from "run-sequence";
-import watch from "gulp-watch";
-import server from "gulp-live-server";
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const sourcemaps = require('gulp-sourcemaps');
+const flow = require('gulp-flow-remove-types');
 
-const paths = {
-  js: ["./src'**/*.js"],
-  destination: './app'
-};
-
-gulp.task('default', end => {
-    run('server', 'build', 'watch', end);
-});
-let express;
-gulp.task("server", () => {
-    express = server.new(paths.destination);
+gulp.task('scripts', () => {
+    return gulp.src('src/**/*.js')
+        .pipe(sourcemaps.init())
+        .pipe(babel())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('build'));
 });
 
-gulp.task("build", end => {
-    run('clean', 'flow', 'babel', "restart", end);
+gulp.task('flow', () => {
+    return gulp.src('src/**/*.js')
+        .pipe(flow({
+            pretty: true
+        }));
 });
 
-gulp.task("clean", end => {
-    rimraf(paths.destination, end);
+gulp.task('watch', ['flow', 'scripts'], () => {
+    gulp.watch('src/**/*.js', ['flow', 'scripts']);
 });
 
-gulp.task("flow", shell.task(["flow"], {ignoreErrors: true}));
-gulp.task("babel", shell.task(["babel src --out-dir app"]));
-gulp.task("restart", () => {
-    express.start.bind(express)();
-});
-
-gulp.task("watch", () => {
-    return watch(paths.js, () => {
-        gulp.start("build");
-    });
-});
-
+gulp.task('default', ['watch']);

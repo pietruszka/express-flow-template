@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app/index.js"
+    "start": "npm run flow & npm run startapp & wait",
+    "flow": "gulp",
+    "startapp": "nodemon ./build/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,13 +22,21 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-dynamic-import-node": "^1.1.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015-node5": "^1.2.0",
     "babel-preset-stage-0": "^6.24.1",
+    "easy-flow": "0.0.2",
     "flow-bin": "^0.55.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-flow": "^1.5.1",
+    "gulp-flow-remove-types": "^1.0.0",
+    "gulp-flowtype": "^1.0.0",
     "gulp-live-server": "0.0.31",
     "gulp-shell": "^0.6.3",
+    "gulp-sourcemaps": "^2.6.1",
     "gulp-watch": "^4.3.11",
+    "npm-run-all": "^4.1.1",
     "rimraf": "^2.6.2",
     "run-sequence": "^2.2.0"
   },

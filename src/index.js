@@ -1,7 +1,7 @@
 //@flow
 
 import express from "express";
-import  bodyParser from "body-parser";
+import bodyParser from "body-parser";
 import multer from "multer";
 import morgan from "morgan";
 
@@ -14,17 +14,34 @@ let t = typeof square(2); // Error!
 function concat(a: string, b:string): string {
     return a+b;
 }
-interface MyI{
-    +prop: string
-};
-class Application implements MyI{
-    field: number | string = 5;
-    prop: string = "5";
-    constructor(){
-        //this.field = "d";
-        this.prop = "555";
-    };
+interface IApplication{
+    prop: string | number | boolean;
+    field: string | number;
 }
+
+interface ICustomer{
+    Customer: Customer;
+
+}
+interface ICustomerPersonal{
+    name: string | number;
+    surname: string;
+}
+
+
+
+class Application implements ICustomerPersonal{
+    field: number | string = 55555;
+    prop: string = "5f";
+    name: string | number = "g";
+    surname: string = "g";
+
+}
+
+class Customer implements ICustomerPersonal{
+    name: string | number;
+    surname: string;
+};
 
 console.log(new Application().field)
 
